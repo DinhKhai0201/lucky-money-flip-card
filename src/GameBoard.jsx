@@ -26,9 +26,9 @@ const GameBoard = () => {
     "50k",
     "50k",
     "50k",
+    "50k",
     "100k",
     "100k",
-    "200k",
   ];
 
   const onOpenModal = () => setOpen(true);
