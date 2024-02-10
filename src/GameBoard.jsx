@@ -176,11 +176,14 @@ const GameBoard = () => {
         >
           Bạn nhận được
         </h2>
-        <div className="front">
+        <div className="front" style={{
+          display: "flex",
+          justifyContent: "center"
+        }}>
           <img
             style={{
-              width: "400px",
-              height: "200px",
+              width: "300px",
+              height: "150px",
             }}
             alt={selectedCard.name}
             src={"images/" + selectedCard.name + ".webp"}
