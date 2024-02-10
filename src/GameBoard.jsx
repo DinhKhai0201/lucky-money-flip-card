@@ -6,10 +6,13 @@ import "react-responsive-modal/styles.css";
 import Card from "./Card";
 import GameOver from "./GameOver";
 import { sendNotification } from "./telegram";
+import useSound from 'use-sound';
+import boopSfx from './clap.mp3';
 
 const GameBoard = () => {
   const parsed = queryString.parse(window.location.search);
   const [open, setOpen] = useState(false);
+  const [play] = useSound(boopSfx);
 
   const [count, setCount] = useState(0);
   const cards = [
@@ -70,6 +73,7 @@ const GameBoard = () => {
   ///////////// GAME LOGIC /////////////
 
   const handleClick = async (name, index) => {
+    play();
     if (count == 1) {
       return;
     }
