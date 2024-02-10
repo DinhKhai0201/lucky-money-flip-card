@@ -12,7 +12,7 @@ export default function App() {
         </p>
         <p style={{ textAlign: "center", fontSize: "20px" }}>
           Số lượng: 2 tờ 5k, 3 tờ 10k, 3 tờ 20k, 4 tờ 50k , 3 tờ 100k 
-          và 1 thẻ chứa phần quà đặc biệt{" "}
+          và 1 tờ 200k{" "}
         </p>
       </div>
       <GameBoard />
