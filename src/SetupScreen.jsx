@@ -4,12 +4,14 @@ import bgMusic from './bg.mp3';
 
 const SetupScreen = ({ onStart }) => {
   const [denominations, setDenominations] = useState({
+    "2k": 4,
     "5k": 4,
     "10k": 4,
     "20k": 5,
     "50k": 5,
     "100k": 2,
-    "200k": 2
+    "200k": 2,
+    "500k": 0
   });
 
   const [play] = useSound(bgMusic, {
@@ -55,7 +57,19 @@ const SetupScreen = ({ onStart }) => {
               <img 
                 src={`images/${denom}.webp`} 
                 alt={denom}
-                style={{ width: '100px', height: 'auto', marginBottom: '10px' }}
+                style={{ 
+                  width: '200px',
+                  height: 'auto',
+                  marginBottom: '15px',
+                  objectFit: 'contain',
+                  transition: 'transform 0.3s ease',
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.transform = 'scale(1.05)';
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.transform = 'scale(1)';
+                }}
               />
               <div className="input-group">
                 <button 
