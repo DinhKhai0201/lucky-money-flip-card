@@ -231,7 +231,7 @@ const GameBoard = ({ initialCards }) => {
             fontSize: "calc(0.8rem + 0.5vw)",
             margin: 0
           }}>
-            Bạn nhận được
+            Bạn nhận được <b style={{ color: "green" }}>{selectedCard.name}</b>
           </h3>
           <div style={{
             background: "rgba(255,255,255,0.9)",
