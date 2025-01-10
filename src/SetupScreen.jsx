@@ -45,7 +45,7 @@ const SetupScreen = ({ onStart }) => {
 
   return (
     <div className="setup-screen">
-      <h1>Lucky Money 🎊</h1>
+      <h1>Lucky Money 2024 🎊</h1>
       <p>Chọn số lượng cho từng mệnh giá</p>
       
       <div className="denominations-grid">
