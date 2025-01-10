@@ -19,7 +19,7 @@ export default function App() {
       ) : (
         <>
           <div className="header">
-            <h1>Lucky Money 2024 🎊</h1>
+            <h1>Lucky Money 2025 🎊</h1>
             <p>Bạn được chọn ngẫu nhiên 1 thẻ chứa mệnh giá tiền ở mặt sau</p>
           </div>
           <GameBoard initialCards={gameCards} />
