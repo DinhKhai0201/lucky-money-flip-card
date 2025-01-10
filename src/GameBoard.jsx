@@ -8,35 +8,15 @@ import { sendNotification } from "./telegram";
 import useSound from 'use-sound';
 import boopSfx from './clap.mp3';
 
-const GameBoard = () => {
+const GameBoard = ({ initialCards }) => {
   const parsed = queryString.parse(window.location.search);
-  const [open, setOpen] = useState(false);
-  const [play] = useSound(boopSfx);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [play] = useSound(boopSfx, {
+    volume: 0.25
+  });
 
   const [count, setCount] = useState(0);
-  const cards = [
-    "5k",
-    "5k",
-    "5k",
-    "10k",
-    "10k",
-    "10k",
-    "10k",
-    "20k",
-    "20k",
-    "20k",
-    "20k",
-    "50k",
-    "50k",
-    "50k",
-    "100k",
-    "100k",
-    "100k",
-    "200k"
-  ];
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [remainingCards, setRemainingCards] = useState(cards.length);
+  const [remainingCards, setRemainingCards] = useState(initialCards.length);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -69,7 +49,7 @@ const GameBoard = () => {
   ///////////// SETUP /////////////
 
   const [cardList, setCardList] = useState(
-    shuffle(cards).map((name, index) => {
+    shuffle(initialCards).map((name, index) => {
       return {
         id: index,
         name: name,
@@ -141,7 +121,7 @@ const GameBoard = () => {
 
   const restartGame = () => {
     setCardList(
-      shuffle(cards).map((name, index) => {
+      shuffle(initialCards).map((name, index) => {
         return {
           id: index,
           name: name,
@@ -157,7 +137,7 @@ const GameBoard = () => {
 
   const resetGame = () => {
     setCardList(
-      shuffle(cards).map((name, index) => {
+      shuffle(initialCards).map((name, index) => {
         return {
           id: index,
           name: name,
@@ -168,7 +148,7 @@ const GameBoard = () => {
     );
     setCount(0);
     setSelectedCard({});
-    setRemainingCards(cards.length);
+    setRemainingCards(initialCards.length);
     setIsModalOpen(false);
   };
 

@@ -24,7 +24,11 @@ const Card = ({ id, name, flipped, matched, clicked }) => {
           alt={name} 
           src={`images/${name}.webp`}
           style={{
-            transition: "transform 0.3s ease"
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            transition: "transform 0.3s ease",
+            background: "transparent"
           }}
         />
       </div>

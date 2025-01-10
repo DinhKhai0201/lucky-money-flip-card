@@ -1,7 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
 body {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+p, button, input {
+  font-weight: 500;
+}
+
+.setup-screen h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #2d3436;
+}
+
+.setup-screen p {
+  font-size: 1.1rem;
+  color: #636e72;
+  margin-bottom: 2rem;
+}
+
+.start-button {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.total-cards {
+  font-weight: 600;
+}
+
+.adjust-btn {
+  font-weight: 600;
+}
+
 .game-board {
   max-width: 1200px;
   margin: 0 auto;
@@ -49,14 +99,14 @@ body {
 }
 .game-board .card .front {
   transform: rotateY(180deg);
-  line-height: 110px;
-  text-emphasis: none;
+  background: transparent;
+  box-shadow: none;
 }
 .game-board .card .front img {
   vertical-align: middle;
-  width: 70%;
-  max-width: 150px;
-  max-height: 75%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .game-board .card.flipped {
   transform: rotateY(180deg);
@@ -66,9 +116,6 @@ body {
 }
 .game-board .card.matched .front {
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) inset;
-  animation: selected 0.8s 0s ease 1;
-  animation-fill-mode: both;
-  opacity: 0.2;
   animation: celebrate 0.8s ease;
 }
 .restart-button {
@@ -89,29 +136,12 @@ body {
 .react-responsive-modal-modal {
   max-width: 400px!important;
 }
-@keyframes selected {
-  0% {
-    opacity: 0.2;
- }
-  30% {
-    opacity: 0.5;
- }
-  50% {
-    opacity: 0.9;
- }
-  70% {
-    opacity: 0.2;
- }
-  100% {
-    opacity: 0.3;
- }
-}
 @keyframes celebrate {
   0% { transform: scale(1) rotate(0); }
   50% { transform: scale(1.2) rotate(10deg); }
   100% { transform: scale(1) rotate(0); }
 }
-.game-board .card:hover {
+.game-board .card:not(.flipped):not(.matched):hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
@@ -198,4 +228,103 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Card đã mở hoặc matched sẽ giữ nguyên trạng thái và hiển thị rõ nét */
+.game-board .card.flipped,
+.game-board .card.matched {
+  transform: rotateY(180deg);
+  pointer-events: none;
+}
+
+.game-board .card.matched .front img {
+  opacity: 1;
+}
+
+/* Loại bỏ hover effect cho card đã matched */
+.game-board .card.matched:hover {
+  transform: rotateY(180deg);
+  box-shadow: none;
+}
+
+.setup-screen {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.denominations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.denomination-input {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.input-group input {
+  width: 60px;
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.adjust-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: #4834d4;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.adjust-btn:hover {
+  background: #686de0;
+  transform: scale(1.1);
+}
+
+.start-button {
+  padding: 15px 40px;
+  font-size: 18px;
+  background: #4834d4;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(72, 52, 212, 0.3);
+}
+
+.start-button:hover {
+  background: #686de0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(72, 52, 212, 0.4);
+}
+
+.total-cards {
+  font-size: 18px;
+  margin: 20px 0;
+  color: #2d3436;
+  font-weight: bold;
 }
