@@ -3,10 +3,8 @@ import React from "react";
 const Card = ({ id, name, flipped, matched, clicked }) => {
   return (
     <div
-      onClick={() => (flipped ? undefined : clicked(name, id))}
-      className={
-        "card" + (flipped ? " flipped" : "") + (matched ? " matched" : "")
-      }
+      onClick={() => (!flipped && !matched ? clicked(name, id) : undefined)}
+      className={`card${flipped ? " flipped" : ""}${matched ? " matched" : ""}`}
     >
       <div className="back">
         <img
@@ -14,13 +12,21 @@ const Card = ({ id, name, flipped, matched, clicked }) => {
             objectFit: "cover",
             width: "100%",
             height: "100%",
+            borderRadius: "10px",
+            transition: "transform 0.3s ease"
           }}
-          alt="Text"
+          alt="Card Back"
           src={"images/test.jpeg"}
         />
       </div>
       <div className="front">
-        <img alt={name} src={"images/" + name + ".webp"} />
+        <img 
+          alt={name} 
+          src={`images/${name}.webp`}
+          style={{
+            transition: "transform 0.3s ease"
+          }}
+        />
       </div>
     </div>
   );

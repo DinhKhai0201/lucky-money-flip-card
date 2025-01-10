@@ -1,9 +1,8 @@
 import queryString from "query-string";
 import React, { useState } from "react";
 import Confetti from "react-confetti";
-import { Modal } from "react-responsive-modal";
-import "react-responsive-modal/styles.css";
 import Card from "./Card";
+import Modal from "./Modal";
 import GameOver from "./GameOver";
 import { sendNotification } from "./telegram";
 import useSound from 'use-sound';
@@ -18,24 +17,38 @@ const GameBoard = () => {
   const cards = [
     "5k",
     "5k",
+    "5k",
     "10k",
     "10k",
     "10k",
+    "10k",
     "20k",
     "20k",
     "20k",
     "20k",
-    "50k",
-    "50k",
     "50k",
     "50k",
     "50k",
     "100k",
     "100k",
+    "100k",
+    "200k"
   ];
 
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [remainingCards, setRemainingCards] = useState(cards.length);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setCount(0);
+    setCardList(cardList.map(card => {
+      if (card.id === selectedCard.index) {
+        return { ...card, matched: true };
+      }
+      return card;
+    }));
+    setRemainingCards(prev => prev - 1);
+  };
 
   ///////////// HELPER FUNCTION /////////////
 
@@ -73,38 +86,30 @@ const GameBoard = () => {
   ///////////// GAME LOGIC /////////////
 
   const handleClick = async (name, index) => {
-    play();
-    if (count == 1) {
+    if (count === 1 || cardList[index].matched) {
       return;
     }
+    
+    play();
     setCount(1);
+    
     let currentCard = {
       name,
       index,
     };
     setSelectedCard(currentCard);
 
-    //update card is flipped
-    let updateCards = cardList.map((card) => {
+    setCardList(cardList.map((card) => {
       if (card.id === index) {
-        card.flipped = true;
+        return { ...card, flipped: true };
       }
       return card;
-    });
-    // let updateFlipped = flippedCards;
-    // updateFlipped.push(currentCard);
-    // setFlippedCards(updateFlipped);
-    setCardList(updateCards);
-    onOpenModal();
+    }));
+    
+    setIsModalOpen(true);
     await sendNotification(
-      `${parsed?.user ? parsed.user : "Unknow user"} win ${name}`
+      `${parsed?.user ? parsed.user : "Unknown user"} win ${name}`
     );
-    //if 2 cards are flipped, check if they are a match
-    // if (flippedCards.length === 2) {
-    //   setTimeout(() => {
-    //     check();
-    //   }, 750);
-    // }
   };
 
   const check = () => {
@@ -150,53 +155,155 @@ const GameBoard = () => {
     setGameOver(false);
   };
 
+  const resetGame = () => {
+    setCardList(
+      shuffle(cards).map((name, index) => {
+        return {
+          id: index,
+          name: name,
+          flipped: false,
+          matched: false,
+        };
+      })
+    );
+    setCount(0);
+    setSelectedCard({});
+    setRemainingCards(cards.length);
+    setIsModalOpen(false);
+  };
+
   ///////////// DISPLAY /////////////
 
   return (
-    <div className="game-board">
-      {!gameOver &&
-        cardList.map((card, index) => (
+    <div>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '20px',
+        maxWidth: '1200px',
+        margin: '0 auto'
+      }}>
+        <div style={{ fontSize: 'calc(0.8rem + 0.5vw)' }}>
+          Còn lại: {remainingCards} thẻ
+        </div>
+        <button
+          onClick={resetGame}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#4834d4',
+            color: 'white',
+            border: 'none',
+            borderRadius: '25px',
+            cursor: 'pointer',
+            fontSize: 'calc(0.8rem + 0.5vw)',
+            fontWeight: 'bold',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 4px 15px rgba(72, 52, 212, 0.3)'
+          }}
+          onMouseOver={(e) => {
+            e.target.style.backgroundColor = '#686de0';
+            e.target.style.transform = 'translateY(-2px)';
+            e.target.style.boxShadow = '0 6px 20px rgba(72, 52, 212, 0.4)';
+          }}
+          onMouseOut={(e) => {
+            e.target.style.backgroundColor = '#4834d4';
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = '0 4px 15px rgba(72, 52, 212, 0.3)';
+          }}
+        >
+          Chơi lại
+        </button>
+      </div>
+
+      <div className="game-board">
+        {cardList.map((card, index) => (
           <Card
             key={index}
             id={index}
             name={card.name}
             flipped={card.flipped}
             matched={card.matched}
-            clicked={
-              count == 0
-                ? flippedCards.length === 2
-                  ? () => {}
-                  : handleClick
-                : () => {}
-            }
+            clicked={!card.matched && count === 0 ? handleClick : () => {}}
           />
         ))}
-      {gameOver && <GameOver restartGame={restartGame} />}
-      <Modal open={open} onClose={onCloseModal} center>
-        <h2
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Bạn nhận được
-        </h2>
-        <div className="front" style={{
+      </div>
+
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <div style={{
+          textAlign: "center",
+          maxWidth: "100%",
           display: "flex",
-          justifyContent: "center"
+          flexDirection: "column",
+          justifyContent: "space-between",
+          gap: "15px"
         }}>
-          <img
+          <h2 style={{
+            color: "#2d3436",
+            fontSize: "calc(1rem + 1vw)",
+            fontWeight: "bold",
+            margin: 0
+          }}>
+            🎉 Chúc mừng bạn! 🎉
+          </h2>
+          <h3 style={{
+            color: "#636e72",
+            fontSize: "calc(0.8rem + 0.5vw)",
+            margin: 0
+          }}>
+            Bạn nhận được
+          </h3>
+          <div style={{
+            background: "rgba(255,255,255,0.9)",
+            borderRadius: "10px",
+            padding: "10px",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.1)"
+          }}>
+            <img
+              style={{
+                width: "100%",
+                maxWidth: "250px",
+                height: "auto",
+                objectFit: "contain"
+              }}
+              alt={selectedCard.name}
+              src={`images/${selectedCard.name}.webp`}
+            />
+          </div>
+          <button
+            onClick={handleCloseModal}
             style={{
-              width: "300px",
-              height: "150px",
+              padding: "10px 25px",
+              backgroundColor: "#ff6b6b",
+              color: "white",
+              border: "none",
+              borderRadius: "25px",
+              cursor: "pointer",
+              fontSize: "calc(0.8rem + 0.5vw)",
+              transition: "all 0.3s ease",
+              boxShadow: "0 4px 15px rgba(255,107,107,0.3)",
+              fontWeight: "bold"
             }}
-            alt={selectedCard.name}
-            src={"images/" + selectedCard.name + ".webp"}
-          />
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#ff5252";
+              e.target.style.transform = "translateY(-2px)";
+              e.target.style.boxShadow = "0 6px 20px rgba(255,107,107,0.4)";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = "#ff6b6b";
+              e.target.style.transform = "translateY(0)";
+              e.target.style.boxShadow = "0 4px 15px rgba(255,107,107,0.3)";
+            }}
+          >
+            Chọn tiếp
+          </button>
         </div>
-        {open && (
+        {isModalOpen && (
           <Confetti
-            width={window?.width || 500}
-            height={window?.height || 500}
+            width={window?.innerWidth}
+            height={window?.innerHeight}
+            numberOfPieces={200}
+            recycle={false}
           />
         )}
       </Modal>
