@@ -328,3 +328,68 @@ p, button, input {
   color: #2d3436;
   font-weight: bold;
 }
+
+.lucky-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.welcome-text {
+  text-align: center;
+  color: #2d3436;
+  font-size: calc(1.5rem + 1vw);
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.lucky-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.lucky-card:hover {
+  transform: scale(1.05);
+}
+
+.lucky-card.shaking {
+  animation: shake 0.5s infinite;
+}
+
+.lucky-card.opened {
+  animation: openCard 1s forwards;
+}
+
+.envelope-image {
+  width: 300px;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+}
+
+.prize-image {
+  width: 300px;
+  height: auto;
+  animation: fadeIn 1s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes openCard {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
