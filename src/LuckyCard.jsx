@@ -49,7 +49,7 @@ const LuckyCard = () => {
 
   return (
     <div className="lucky-card-container" style={{
-      background: 'linear-gradient(135deg, #faf1e4 0%, #ffecd2 100%)',
+      background: 'linear-gradient(135deg, #fff3e0 0%, #ffcdd2 100%)',
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
@@ -65,19 +65,18 @@ const LuckyCard = () => {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundImage: 'radial-gradient(#e17055 1px, transparent 1px)',
+        backgroundImage: 'radial-gradient(#e53935 1px, transparent 1px)',
         backgroundSize: '30px 30px',
         opacity: 0.1,
         pointerEvents: 'none'
       }} />
 
       <h1 className="welcome-text" style={{
-        color: '#d63031',
+        color: '#c62828',
         fontSize: 'calc(1.5rem + 1vw)',
         textAlign: 'center',
-        marginBottom: '40px',
         fontWeight: 'bold',
-        textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
+        textShadow: '2px 2px 4px rgba(198, 40, 40, 0.1)',
         position: 'relative',
         padding: '20px',
         maxWidth: '800px'
@@ -88,16 +87,16 @@ const LuckyCard = () => {
       {isOpened && (
         <p className="prize-message" style={{
           fontSize: 'calc(1rem + 0.5vw)',
-          color: '#d63031',
+          color: '#c62828',
           marginTop: '20px',
           textAlign: 'center',
           fontWeight: '500',
           animation: 'fadeIn 1s ease',
           padding: '20px 30px',
-          background: 'rgba(255, 255, 255, 0.95)',
+          background: 'rgba(255, 248, 225, 0.95)',
           borderRadius: '20px',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-          border: '1px solid rgba(214, 48, 49, 0.1)',
+          boxShadow: '0 10px 30px rgba(198, 40, 40, 0.1)',
+          border: '1px solid rgba(198, 40, 40, 0.1)',
           maxWidth: '600px',
           width: '90%',
           transform: 'translateY(-10px)',
@@ -108,7 +107,7 @@ const LuckyCard = () => {
             fontSize: 'calc(1.2rem + 0.5vw)', 
             display: 'block',
             marginBottom: '10px',
-            color: '#d63031',
+            color: '#c62828',
             fontWeight: 'bold'
           }}>
             🎊 Chúc Mừng Năm Mới 🎊
@@ -134,22 +133,21 @@ const LuckyCard = () => {
             style={{
               width: '300px',
               height: 'auto',
-              filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.2))',
+              filter: 'drop-shadow(0 10px 20px rgba(198, 40, 40, 0.2))',
               transition: 'all 0.3s ease',
               animation: isShaking ? 'shake 0.5s infinite' : '',
-              transform: 'rotate(-5deg)',
               cursor: 'pointer'
             }}
             onMouseOver={(e) => {
               if (!isShaking && !isOpened) {
                 e.target.style.transform = 'rotate(0deg) scale(1.1)';
-                e.target.style.filter = 'drop-shadow(0 15px 25px rgba(0,0,0,0.25))';
+                e.target.style.filter = 'drop-shadow(0 15px 25px rgba(198, 40, 40, 0.25))';
               }
             }}
             onMouseOut={(e) => {
               if (!isShaking && !isOpened) {
                 e.target.style.transform = 'rotate(-5deg) scale(1)';
-                e.target.style.filter = 'drop-shadow(0 10px 20px rgba(0,0,0,0.2))';
+                e.target.style.filter = 'drop-shadow(0 10px 20px rgba(198, 40, 40, 0.2))';
               }
             }}
           />
@@ -160,7 +158,7 @@ const LuckyCard = () => {
             style={{
               width: '300px',
               height: 'auto',
-              filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.15))',
+              filter: 'drop-shadow(0 10px 30px rgba(198, 40, 40, 0.15))',
               animation: 'fadeIn 1s ease',
               transform: 'scale(1.1)',
               transition: 'all 0.3s ease'
@@ -175,7 +173,7 @@ const LuckyCard = () => {
           height={window?.innerHeight}
           numberOfPieces={200}
           recycle={false}
-          colors={['#d63031', '#e17055', '#fdcb6e', '#00b894', '#0984e3']}
+          colors={['#c62828', '#ffd700', '#d50000', '#ffeb3b', '#ff6d00']}
         />
       )}
     </div>
