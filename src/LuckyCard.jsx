@@ -112,7 +112,18 @@ const LuckyCard = () => {
           }}>
             🎊 Chúc Mừng Năm Mới 🎊
           </span>
-          Chúc {name || "bạn"} năm mới an khang thịnh vượng! 🧧
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px'
+          }}>
+            Chúc {name || "bạn"} năm mới: 🧧
+            <span>💪 Sức khỏe dồi dào</span>
+            <span>📚 Học tập thật giỏi</span>
+            <span>✨ Ngày càng xinh đẹp</span>
+            <span>💰 Tiền vào như nước</span>
+            <span>🌟 Vạn sự như ý</span>
+          </div>
         </p>
       )}
       
