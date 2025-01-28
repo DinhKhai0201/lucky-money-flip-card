@@ -16,8 +16,7 @@ const LuckyCard = () => {
   const [title, setTitle] = useState(null);
 
   const prizes = [
-    "20k", "20k", "20k", "20k",
-    "50k", "50k", "50k", "50k",
+    "50k", "50k",
     "100k", "100k", "100k",
     "200k", "200k", "200k",
     "500k"
